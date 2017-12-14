@@ -27,6 +27,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_TESTTEXT_Textview1    50005
 #define ID_TESTTEXT_Textviewanimation    50004
 #define ID_TESTTEXT_Digitalclock1    93001
 #define ID_TESTTEXT_sys_back   100

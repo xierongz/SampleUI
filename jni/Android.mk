@@ -51,10 +51,7 @@ LOCAL_SRC_FILES  := $(MY_SRC_LIST)
 
 
 LOCAL_CPPFLAGS := -fexceptions -fpermissive
-LOCAL_LDFLAGS := -L$(ZKSW_PREBUILT_LIB_PATH)/system -lstlport\
-				-lnetutils\
-				-lcutils \
-				-lsqlite
+LOCAL_LDFLAGS := -L$(ZKSW_PREBUILT_LIB_PATH)/system -lstlport
 
 LOCAL_C_INCLUDES := $(EASYUI_COMMON_INCLUDE) \
 					$(ZKSW_PREBUILT_INCLUDE_PATH)\

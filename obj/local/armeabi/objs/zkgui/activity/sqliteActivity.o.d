@@ -399,9 +399,7 @@ G:/zkswe/HMISample/newtools/SampleControls/obj/local/armeabi/objs/zkgui/activity
  G:/zkswe/HMISample/newtools/SampleControls/jni/include/utils/MessageQueue.h \
  G:/zkswe/HMISample/newtools/SampleControls/jni/include/system/Condition.h \
  G:/zkswe/HMISample/newtools/SampleControls/jni/include/window/ZKSlideWindow.h \
- G:/zkswe/HMISample/newtools/SampleControls/jni/logic/sqliteLogic.cc \
- G:/zkswe/HMISample/newtools/SampleControls/jni/logic/../sqapi/ZKSQL.h \
- G:\zkswe\developerEnv_win64-1203\developerEnv_win64\editor64\/configuration/zksw-update-1.0/zksw_prebuilt//include/platform/sqlite3.h
+ G:/zkswe/HMISample/newtools/SampleControls/jni/logic/sqliteLogic.cc
 
 G:/zkswe/HMISample/newtools/SampleControls/jni/activity/sqliteActivity.h:
 
@@ -1202,7 +1200,3 @@ G:/zkswe/HMISample/newtools/SampleControls/jni/include/system/Condition.h:
 G:/zkswe/HMISample/newtools/SampleControls/jni/include/window/ZKSlideWindow.h:
 
 G:/zkswe/HMISample/newtools/SampleControls/jni/logic/sqliteLogic.cc:
-
-G:/zkswe/HMISample/newtools/SampleControls/jni/logic/../sqapi/ZKSQL.h:
-
-G:\zkswe\developerEnv_win64-1203\developerEnv_win64\editor64\/configuration/zksw-update-1.0/zksw_prebuilt//include/platform/sqlite3.h:
