@@ -10,7 +10,11 @@
 
 #include "ZKBase.h"
 
+class ZKQRCodePrivate;
+
 class ZKQRCode : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKQRCode)
+
 public:
 	ZKQRCode(HWND hParentWnd);
 	virtual ~ZKQRCode();
@@ -18,6 +22,8 @@ public:
 	bool loadQRCode(const char *pStr);
 
 protected:
+	ZKQRCode(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_QRCODE; }
 	virtual void onDraw(HDC hdc);

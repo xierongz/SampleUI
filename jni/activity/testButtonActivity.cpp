@@ -4,13 +4,15 @@
 #include "testButtonActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mButton3Ptr;
+static ZKButton* mButton_open_developerPtr;
+static ZKButton* mButton1Ptr;
 static ZKTextView* mTextview4Ptr;
 static ZKTextView* mTextview3Ptr;
 static ZKTextView* mTextview2Ptr;
 static ZKTextView* mTextview1Ptr;
 static ZKButton* mButton2Ptr;
 static ZKButton* mButtonspecialPtr;
-static ZKButton* mButton1Ptr;
 static ZKTextView* mTextswPtr;
 static ZKButton* mButtoncheckPtr;
 static ZKButton* mButtonswPtr;
@@ -51,12 +53,14 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_TESTBUTTON_Button3, onButtonClick_Button3,
+	ID_TESTBUTTON_Button1, onButtonClick_Button1,
     ID_TESTBUTTON_Button2, onButtonClick_Button2,
     ID_TESTBUTTON_Buttonspecial, onButtonClick_Buttonspecial,
-    ID_TESTBUTTON_Button1, onButtonClick_Button1,
     ID_TESTBUTTON_Buttoncheck, onButtonClick_Buttoncheck,
     ID_TESTBUTTON_Buttonsw, onButtonClick_Buttonsw,
     ID_TESTBUTTON_Buttonbg, onButtonClick_Buttonbg,
+	ID_TESTBUTTON_Button_open_developer, onButtonClick_Button_open_developer,
 };
 /***************/
 
@@ -137,13 +141,15 @@ const char* testButtonActivity::getAppName() const{
 //TAG:onCreate
 void testButtonActivity::onCreate() {
 	Activity::onCreate();
+    mButton3Ptr = (ZKButton*)findControlByID(ID_TESTBUTTON_Button3);
+    mButton_open_developerPtr = (ZKButton*)findControlByID(ID_TESTBUTTON_Button_open_developer);
+    mButton1Ptr = (ZKButton*)findControlByID(ID_TESTBUTTON_Button1);
     mTextview4Ptr = (ZKTextView*)findControlByID(ID_TESTBUTTON_Textview4);
     mTextview3Ptr = (ZKTextView*)findControlByID(ID_TESTBUTTON_Textview3);
     mTextview2Ptr = (ZKTextView*)findControlByID(ID_TESTBUTTON_Textview2);
     mTextview1Ptr = (ZKTextView*)findControlByID(ID_TESTBUTTON_Textview1);
     mButton2Ptr = (ZKButton*)findControlByID(ID_TESTBUTTON_Button2);
     mButtonspecialPtr = (ZKButton*)findControlByID(ID_TESTBUTTON_Buttonspecial);
-    mButton1Ptr = (ZKButton*)findControlByID(ID_TESTBUTTON_Button1);
     mTextswPtr = (ZKTextView*)findControlByID(ID_TESTBUTTON_Textsw);
     mButtoncheckPtr = (ZKButton*)findControlByID(ID_TESTBUTTON_Buttoncheck);
     mButtonswPtr = (ZKButton*)findControlByID(ID_TESTBUTTON_Buttonsw);

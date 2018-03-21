@@ -33,10 +33,10 @@
 
 
 static const char* PicTab[]={
-	"/res/ui/图片播放/1.jpg",
-	"/res/ui/图片播放/2.jpg",
-	"/res/ui/图片播放/3.jpg",
-	"/res/ui/图片播放/4.jpg"
+	"picplay/1.jpg",
+	"picplay/2.jpg",
+	"picplay/3.jpg",
+	"picplay/4.jpg"
 };
 
 static int PicIndex  = 0;
@@ -60,7 +60,8 @@ static void updateUI_time(){
 	mTextTimePtr->setText(timeStr);
 }
 static void updateUI_Pic(){
-	if(PicIndex++ > 3){
+	PicIndex++;
+	if(PicIndex > 3){
 		PicIndex = 0;
 	}
 	mTextpicPtr->setBackgroundPic(PicTab[PicIndex]);
@@ -83,6 +84,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 static void onUI_init(){
     //Tips :添加 UI初始化的显示代码到这里,如:mText1->setText("123");
 	EASYUICONTEXT->showStatusBar();
+	updateUI_time();
 }
 
 static void onUI_quit() {

@@ -11,7 +11,11 @@
 #include "ZKWindow.h"
 #include "utils/VelocityTracker.h"
 
+class ZKSlideWindowPrivate;
+
 class ZKSlideWindow : public ZKWindow {
+	ZK_DECLARE_PRIVATE(ZKSlideWindow)
+
 public:
 	ZKSlideWindow(HWND hParentWnd);
 	virtual ~ZKSlideWindow();
@@ -26,6 +30,16 @@ public:
 	void setSlideItemClickListener(ISlideItemClickListener *pListener) {
 		mSlideItemClickListenerPtr = pListener;
 	}
+
+	class ISlidePageChangeListener {
+	public:
+		virtual ~ISlidePageChangeListener() { }
+		virtual void onSlidePageChange(ZKSlideWindow *pSlideWindow, int page) = 0;
+	};
+
+	void setSlidePageChangeListener(ISlidePageChangeListener *pListener);
+
+	int getCurrentPage() const;
 
 private:
 	typedef struct {
@@ -46,6 +60,8 @@ private:
 	} SSlidePageInfosList;
 
 protected:
+	ZKSlideWindow(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_SLIDEWINDOW; }
 
@@ -54,21 +70,20 @@ protected:
 	virtual void onTimer(int id);
 
 	void drawBackgroundBlt(HDC hdc);
-	void _section_(zk) drawItems(HDC hdc);
-	void _section_(zk) drawItem(HDC hdc, const SSlideItemInfo *pItem, int xOffset, int yOffset);
+	void drawItemsBlt(HDC hdc);
+	void drawItems(HDC hdc);
+	void drawItem(HDC hdc, const SSlideItemInfo &item, int xOffset, int yOffset);
+	void drawIcon(HDC hdc, const SSlideItemInfo &item, int xOffset, int yOffset);
+	void drawText(HDC hdc, const SSlideItemInfo &item, int xOffset, int yOffset);
 
 private:
 	BOOL isSliding() const { return mIsSliding; }
 	BOOL needToRoll() const { return (mFirstPageXOffset % mPosition.mWidth != 0); }
 
-	BOOL performRollAnimation();		// 执行滚动动画
-	BOOL wantToSlideToNextPage();
-	BOOL wantToSlideToPrevPage();
-
 	int hitItemIndex(int x, int y) const;
 
-	const PBITMAP getItemCurStatusPic(const SSlideItemInfo *pItem) const;
-	int getItemCurTextColor(const SSlideItemInfo *pItem) const;
+	const PBITMAP getItemCurStatusPic(const SSlideItemInfo &item) const;
+	int getItemCurTextColor(const SSlideItemInfo &item) const;
 
 	void _section_(zk) parseSlideWindowAttributeFromJson(const Json::Value &json);
 
@@ -94,15 +109,18 @@ private:
 	BOOL mIsDamping;
 
 	UINT mRollSpeed;
+	int mCurRollSpeed;
 
 	VelocityTracker mVelocityTracker;
-	BOOL mNeedToTurnPage;
 
 	SSlidePageInfosList mSlidePageInfosList;
 
 	ISlideItemClickListener *mSlideItemClickListenerPtr;
 
 	HDC mBackgroundDC;
+	HDC mItemsDC;
+
+	bool mIsUsedItemsDC;
 };
 
 #endif /* _WINDOW_ZKSLIDEWINDOW_H_ */

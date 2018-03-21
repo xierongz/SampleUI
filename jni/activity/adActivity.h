@@ -27,6 +27,13 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_AD_Qrcode1    92001
+#define ID_AD_Textview6    50006
+#define ID_AD_Textview5    50005
+#define ID_AD_Textview4    50004
+#define ID_AD_Textview3    50003
+#define ID_AD_Textview2    50002
+#define ID_AD_windowReadme    110001
 #define ID_AD_sys_back   100
 #define ID_AD_ButtonConnectSev    20003
 #define ID_AD_Button1    20001

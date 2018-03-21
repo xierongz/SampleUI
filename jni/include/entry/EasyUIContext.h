@@ -37,6 +37,8 @@ public:
 
 	// 传入的intentPtr必须是堆里new出来的对象，最后由框架内部完成delete
 	void openActivity(const char *appName, Intent *intentPtr = NULL);
+	void closeActivity(const char *appName);
+
 	void goBack();
 	void goHome();
 
@@ -54,8 +56,9 @@ public:
 	bool isPowerOff() const;
 
 	void setScreensaverTimeOut(int timeOut);
-	void resetScreensaverTimeOut();
 	int getScreensaverTimeOut() const;
+	void resetScreensaverTimeOut();
+	void performResetScreensaverTimeOut();
 
 	void setScreensaverEnable(bool isEnable);
 	bool isScreensaverEnable() const;
@@ -63,6 +66,8 @@ public:
 	void screensaverOn();
 	void screensaverOff();
 	bool isScreensaverOn() const;
+	void performScreensaverOn();
+	void performScreensaverOff();
 
 	void showIME(const IMEContext::SIMETextInfo &info, IMEContext::IIMETextUpdateListener *pListener);
 	void hideIME();
@@ -115,6 +120,8 @@ private:
 
 	int mScreensaverTimeOut;
 	bool mIsScreensaverEnable;
+
+	void *mReservePtr;
 };
 
 #define EASYUICONTEXT			EasyUIContext::getInstance()

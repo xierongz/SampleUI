@@ -10,7 +10,11 @@
 
 #include "ZKBase.h"
 
+class ZKTextViewPrivate;
+
 class ZKTextView : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKTextView)
+
 public:
 	ZKTextView(HWND hParentWnd);
 	virtual ~ZKTextView();
@@ -36,6 +40,8 @@ public:
 	}
 
 protected:
+	ZKTextView(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_TEXTVIEW; }
@@ -84,6 +90,7 @@ protected:
 	std::string mFontType; 		// 使用的字体库类型,如: ttf, bmp
 
 	int mTextStatusColorTab[S_CONTROL_STATUS_TAB_LEN];
+	int mTextBgColor;
 
 	// 字符集相关
 	SCharsetInfoTab mCharsetInfoTab;
@@ -92,6 +99,7 @@ protected:
 	int mRollIntervalTime;	// 滚动时间间隔
 	int mRollStep;			// 滚动步进
 	ERollDirection mRollDirection;
+	LayoutPosition mRollPosition;
 };
 
 #endif /* _CONTROL_ZKTEXTVIEW_H_ */

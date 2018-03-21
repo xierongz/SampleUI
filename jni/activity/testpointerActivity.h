@@ -27,7 +27,6 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_TESTPOINTER_sys_back   100
 #define ID_TESTPOINTER_Pointer1    90000
 /*TAG:Macro宏ID END*/
 

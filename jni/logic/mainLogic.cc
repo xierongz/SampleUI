@@ -64,6 +64,7 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
     return false;
 }
 const char* IconTab[]={
+
 		"testTextActivity",
 		"testSliderActivity",
 		"testButtonActivity",

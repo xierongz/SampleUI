@@ -31,7 +31,8 @@ bool sendProtocol(const BYTE *pData, UINT16 len) {
 	}
 
 	// 校验码
-	dataBuf[frameLen++] = getCheckSum(dataBuf, frameLen);
+	dataBuf[frameLen] = getCheckSum(dataBuf, frameLen);
+	frameLen++;
 
 	return UARTCONTEXT->send(dataBuf, frameLen);
 }

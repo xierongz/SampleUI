@@ -172,7 +172,10 @@ class DhcpHandler;
 
 class WifiManager {
 public:
-	static WifiManager* getInstance();
+	WifiManager(DhcpHandler *dhcpHdlr);
+	~WifiManager();
+
+	bool init();
 
 	bool isSupported() const;
 
@@ -190,22 +193,27 @@ public:
 
 	void saveConfig();
 
+	const char* getMacAddr() const;
+	const char* getIp() const;
+
 	class IWifiListener {
 	public:
 		virtual ~IWifiListener() { }
-		virtual void handleWifiEnable(E_WIFI_ENABLE event, int args) = 0;
-		virtual void handleWifiConnect(E_WIFI_CONNECT event, int args) = 0;
-		virtual void handleWifiErrorCode(E_WIFI_ERROR_CODE code) = 0;
-		virtual void handleWifiScanResult(std::vector<WifiInfo>* wifiInfos) = 0;
+		virtual void handleWifiEnable(E_WIFI_ENABLE event, int args) { }
+		virtual void handleWifiConnect(E_WIFI_CONNECT event, int args) { }
+		virtual void handleWifiErrorCode(E_WIFI_ERROR_CODE code) { }
+		virtual void handleWifiScanResult(std::vector<WifiInfo>* wifiInfos) { }
 		virtual void notifySupplicantStateChange(int networkid,
 				const char* ssid, const char* bssid,
-				E_SUPPLICATION_STATE newState) = 0;
+				E_SUPPLICATION_STATE newState) { }
 	};
 
 	void addWifiListener(IWifiListener *pListener);
 	void removeWifiListener(IWifiListener *pListener);
 
-	std::vector<WifiInfo>* getWifiScanInfos() const { return &mWifiScanInfos; }
+	std::vector<WifiInfo>* getWifiScanInfos() { return &mWifiScanInfos; }
+	void getWifiScanInfosLock(std::vector<WifiInfo> &wifiInfos);
+
 	E_WIFI_ENABLE getEnableStatus() const { return mEnableStatus; }
 
 	const char* getWifiState(const std::string &wifiBssid);
@@ -214,9 +222,6 @@ public:
 	WifiInfo* getConnectionInfo() const;
 
 private:
-	WifiManager();
-	~WifiManager();
-
 	typedef enum {
 		E_MSGTYPE_ENABLE = 1,
 		E_MSGTYPE_DISABLE,
@@ -234,7 +239,7 @@ private:
 	public:
 		ControlThread(WifiManager &wm) : mWM(wm) { }
 
-		void start();
+		bool start();
 		void stop();
 
 	protected:
@@ -252,7 +257,7 @@ private:
 	public:
 		EventThread(WifiManager &wm) : mWM(wm) { }
 
-		void start();
+		bool start();
 		void stop();
 
 	protected:
@@ -294,12 +299,12 @@ private:
 	E_SUPPLICATION_STATE mWifiState;
 
 	std::vector<WifiInfo> mWifiScanInfos;
+	mutable Mutex mWifiScanInfosLock;
+
 	std::map<std::string, std::string> mWifiChangeAps;
 
 	WifiInfo mRequestConnectInfo;
 	WifiInfo mConnectionInfo;
 };
-
-#define WIFIMANAGER			WifiManager::getInstance()
 
 #endif	// _NET_WIFI_MANAGER_H_

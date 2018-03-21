@@ -17,7 +17,6 @@
 #include <minigui/window.h>
 #include <minigui/control.h>
 #include <mgplus/mgplus.h>
-#include <mgncs/mgncs.h>
 #include <mgeff/mgeff.h>
 
 #include "Common.h"
@@ -25,7 +24,19 @@
 
 using namespace std;
 
+class ZKBase;
+class ZKBasePrivate;
+
+class ZKBaseData {
+public:
+    virtual ~ZKBaseData() = 0;
+    ZKBase *q_ptr;
+};
+
+
 class ZKBase {
+	ZK_DECLARE_PRIVATE(ZKBase)
+
 	friend class ControlFactory;
 public:
 	ZKBase(HWND hParentWnd);
@@ -61,6 +72,7 @@ public:
 	BOOL isWndValid() const { return mWnd != HWND_INVALID; }
 
 	void setBackgroundPic(const char *pPicPath);
+	void setBackgroundBmp(PBITMAP pBmp);
 
 	virtual const char* getClassName() const { return NULL; }
 
@@ -81,6 +93,8 @@ public:
 	void setLongClickListener(ILongClickListener *pListener) { mLongClickListenerPtr = pListener; }
 
 protected:
+	ZKBase(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual BOOL createWindow();
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
@@ -134,6 +148,8 @@ protected:
 	} EOrientation;
 
 protected:
+	ZKBaseData *d_ptr;
+
 	HWND mParentWnd;
 	HWND mWnd;
 	int mID;

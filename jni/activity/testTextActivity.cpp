@@ -4,9 +4,7 @@
 #include "testTextActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKTextView* mTextview1Ptr;
 static ZKTextView* mTextviewanimationPtr;
-static ZKDigitalClock* mDigitalclock1Ptr;
 static ZKButton* msys_backPtr;
 static ZKTextView* mTextpicPtr;
 static ZKTextView* mTextTimePtr;
@@ -129,9 +127,7 @@ const char* testTextActivity::getAppName() const{
 //TAG:onCreate
 void testTextActivity::onCreate() {
 	Activity::onCreate();
-    mTextview1Ptr = (ZKTextView*)findControlByID(ID_TESTTEXT_Textview1);
     mTextviewanimationPtr = (ZKTextView*)findControlByID(ID_TESTTEXT_Textviewanimation);
-    mDigitalclock1Ptr = (ZKDigitalClock*)findControlByID(ID_TESTTEXT_Digitalclock1);
     msys_backPtr = (ZKButton*)findControlByID(ID_TESTTEXT_sys_back);
     mTextpicPtr = (ZKTextView*)findControlByID(ID_TESTTEXT_Textpic);
     mTextTimePtr = (ZKTextView*)findControlByID(ID_TESTTEXT_TextTime);

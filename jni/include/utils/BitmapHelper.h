@@ -14,6 +14,7 @@
 class BitmapHelper {
 public:
 	static BOOL loadBitmapFromFile(BITMAP *&pBmp, const char *pPath);
+	static BOOL loadBitmapFromMem(BITMAP *&pBmp, const void *pData, int len, const char *pExt);
 	static void unloadBitmap(BITMAP *&pBmp);
 };
 

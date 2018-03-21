@@ -4,7 +4,6 @@
 #include "testpointerActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
-static ZKButton* msys_backPtr;
 static ZKPointer* mPointer1Ptr;
 
 /*register activity*/
@@ -42,7 +41,6 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
-    ID_TESTPOINTER_sys_back, onButtonClick_sys_back,
 };
 /***************/
 
@@ -123,7 +121,6 @@ const char* testpointerActivity::getAppName() const{
 //TAG:onCreate
 void testpointerActivity::onCreate() {
 	Activity::onCreate();
-    msys_backPtr = (ZKButton*)findControlByID(ID_TESTPOINTER_sys_back);
     mPointer1Ptr = (ZKPointer*)findControlByID(ID_TESTPOINTER_Pointer1);
 	onUI_init();
         // 注册监听全局触摸

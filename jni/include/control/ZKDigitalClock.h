@@ -10,12 +10,18 @@
 
 #include "ZKTextView.h"
 
+class ZKDigitalClockPrivate;
+
 class ZKDigitalClock : public ZKTextView {
+	ZK_DECLARE_PRIVATE(ZKDigitalClock)
+
 public:
 	ZKDigitalClock(HWND hParentWnd);
 	virtual ~ZKDigitalClock();
 
 protected:
+	ZKDigitalClock(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_DIGITALCLOCK; }

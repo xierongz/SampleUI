@@ -59,6 +59,9 @@ public:
 	void setVolume(float leftVolume, float rightVolume);
 	void setPreviewPos(const LayoutPosition &pos);
 
+	/* clockwise rotation: val=0 no rotation, val=1 90 degree; val=2 180 degree, val=3 270 degree */
+	void setRotation(int val);
+
 	int getDuration();
 	int getCurrentPosition();
 
@@ -117,6 +120,8 @@ private:
 	EPlayState mCurrentPlayState;
 
 	IPlayerMessageListener *mPlayerMessageListenerPtr;
+
+	int mVideoRotation;
 };
 
 #endif  /* _MEDIA_ZKMEDIAPLAYER_H_ */

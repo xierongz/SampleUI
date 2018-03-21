@@ -16,6 +16,19 @@
 #define _section_(S)
 #endif
 
+#define ZK_DECLARE_PRIVATE(Class) \
+	inline Class##Private* d_func() { return reinterpret_cast<Class##Private *>(d_ptr); } \
+	inline const Class##Private* d_func() const { return reinterpret_cast<const Class##Private *>(d_ptr); } \
+	friend class Class##Private;
+
+#define ZK_DECLARE_PUBLIC(Class) \
+	inline Class* q_func() { return static_cast<Class *>(q_ptr); } \
+	inline const Class* q_func() const { return static_cast<const Class *>(q_ptr); } \
+	friend class Class;
+
+#define ZK_D(Class) Class##Private * const _d = d_func()
+#define ZK_Q(Class) Class * const _q = q_func()
+
 /********************自定义控件名********************/
 #define ZK_WINDOW		"zk_window"
 #define ZK_SLIDEWINDOW	"zk_slidewindow"
@@ -32,6 +45,7 @@
 #define ZK_QRCODE		"zk_qrcode"
 #define ZK_EDITTEXT		"zk_edittext"
 #define ZK_VIDEOVIEW	"zk_videoview"
+#define ZK_SLIDETEXT	"zk_slidetext"
 /**************************************************/
 
 #define TOUCH_SLOP		10
@@ -46,6 +60,7 @@
 #define ID_CLOCK_TIMER						(ID_TIMER_FIRST+5)
 #define ID_HIDE_WND_TIME_OUT_TIMER			(ID_TIMER_FIRST+6)
 #define ID_ROLL_TEXT_TIMER					(ID_TIMER_FIRST+7)
+#define ID_SLIDETEXT_ROLL_TIMER				(ID_TIMER_FIRST+8)
 #define ID_TIMER_LAST						200
 /**************************************************/
 

@@ -107,6 +107,8 @@ bool UartContext::readyToRun() {
 		closeUart();
 	}
 
+	mDataBufLen = 0;
+
 	return (mDataBufPtr != NULL);
 }
 

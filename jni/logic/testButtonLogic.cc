@@ -29,6 +29,7 @@
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
 
+#include "test/TouchEventTest.h"
 
 /**
  * 注册定时器
@@ -107,12 +108,14 @@ static bool onButtonClick_sys_back(ZKButton *pButton) {
     return true;
 }
 
+/*
 static bool onButtonClick_Button1(ZKButton *pButton) {
     //LOGD(" ButtonClick Button1 !!!\n");
 	pButton->setVisible(false);
 	mButton2Ptr->setVisible(true);
     return true;
 }
+*/
 
 static bool onButtonClick_Buttonspecial(ZKButton *pButton) {
     //LOGD(" ButtonClick Buttonspecial !!!\n");
@@ -125,10 +128,40 @@ static bool onButtonClick_Buttonspecial(ZKButton *pButton) {
     return true;
 }
 
+static bool onButtonClick_Button1(ZKButton *pButton) {
+	LOGD("onButtonClick_Button1\n");
+	static int lastClickTime = 0;
+	static int clickCount = 0;
+
+	int curTime = clock() / 1000;
+	if (curTime - lastClickTime <= 1000) {
+		clickCount++;
+		if (clickCount == 10) {
+			TouchEventTest::getInstance()->startTest();
+			EASYUICONTEXT->goHome();
+		}
+	} else {
+		LOGD("onButtonClick_Button1 clickCount 1\n");
+		clickCount = 1;
+	}
+
+	lastClickTime = curTime;
+
+    return true;
+}
+
 static bool onButtonClick_Button2(ZKButton *pButton) {
     //LOGD(" ButtonClick Button2 !!!\n");
 	pButton->setVisible(false);
-	mButton1Ptr->setVisible(true);
+    return true;
+}
+
+static bool onButtonClick_Button_open_developer(ZKButton *pButton) {
+	EASYUICONTEXT->openActivity("DeveloperSettingActivity");
+    return true;
+}
+static bool onButtonClick_Button3(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button3 !!!\n");
     return true;
 }
 

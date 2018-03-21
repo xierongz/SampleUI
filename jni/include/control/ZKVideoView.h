@@ -11,7 +11,11 @@
 #include "ZKBase.h"
 #include "media/ZKMediaPlayer.h"
 
+class ZKVideoViewPrivate;
+
 class ZKVideoView : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKVideoView)
+
 public:
 	ZKVideoView(HWND hParentWnd);
 	virtual ~ZKVideoView();
@@ -26,6 +30,9 @@ public:
 
 	void setVolume(float volume);
 	void setPosition(const LayoutPosition &position);
+
+	/* clockwise rotation: val=0 no rotation, val=1 90 degree; val=2 180 degree, val=3 270 degree */
+	void setRotation(int val);
 
 	int getDuration();
 	int getCurrentPosition();
@@ -48,6 +55,8 @@ public:
 	}
 
 protected:
+	ZKVideoView(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_VIDEOVIEW; }

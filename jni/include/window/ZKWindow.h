@@ -11,7 +11,11 @@
 #include <vector>
 #include "control/ZKBase.h"
 
+class ZKWindowPrivate;
+
 class ZKWindow : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKWindow)
+
 public:
 	ZKWindow(HWND hParentWnd);
 	virtual ~ZKWindow();
@@ -26,6 +30,8 @@ public:
 	bool isWndShow() const;
 
 protected:
+	ZKWindow(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_WINDOW; }

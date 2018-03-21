@@ -27,17 +27,19 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_TESTBUTTON_Button3    20008
+#define ID_TESTBUTTON_Button1    20001
 #define ID_TESTBUTTON_Textview4    50004
 #define ID_TESTBUTTON_Textview3    50003
 #define ID_TESTBUTTON_Textview2    50002
 #define ID_TESTBUTTON_Textview1    50001
 #define ID_TESTBUTTON_Button2    20003
 #define ID_TESTBUTTON_Buttonspecial    20002
-#define ID_TESTBUTTON_Button1    20001
 #define ID_TESTBUTTON_Textsw    50000
 #define ID_TESTBUTTON_Buttoncheck    20006
 #define ID_TESTBUTTON_Buttonsw    20005
 #define ID_TESTBUTTON_Buttonbg    20004
+#define ID_TESTBUTTON_Button_open_developer    20007
 /*TAG:Macro宏ID END*/
 
 class testButtonActivity : public Activity, 

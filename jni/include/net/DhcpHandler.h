@@ -10,13 +10,15 @@ public:
 	
 	int ethernetRequestIp();
 	int ethernetReleaseIp();
+
 	int wifiRequestIp();
 	int wifiReleaseIp();
 	
-//	int getIp(char *netName, char *ipstr);
+	const char* getIp() const;
 	
 private:
 	mutable Mutex mLock;
+	char mIpAddr[32];
 };
 
 #endif	//_NET_DHCP_HANDLER_H_

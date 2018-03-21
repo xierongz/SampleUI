@@ -10,7 +10,11 @@
 
 #include "ZKCheckBox.h"
 
+class ZKRadioGroupPrivate;
+
 class ZKRadioGroup : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKRadioGroup)
+
 public:
 	ZKRadioGroup(HWND hParentWnd);
 	virtual ~ZKRadioGroup();
@@ -32,6 +36,8 @@ public:
 	}
 
 protected:
+	ZKRadioGroup(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual void onAfterCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_RADIOGROUP; }

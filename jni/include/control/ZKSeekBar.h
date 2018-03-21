@@ -10,7 +10,11 @@
 
 #include "ZKBase.h"
 
+class ZKSeekBarPrivate;
+
 class ZKSeekBar : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKSeekBar)
+
 public:
 	ZKSeekBar(HWND hParentWnd);
 	virtual ~ZKSeekBar();
@@ -35,6 +39,8 @@ public:
 	}
 
 protected:
+	ZKSeekBar(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_SEEKBAR; }
 

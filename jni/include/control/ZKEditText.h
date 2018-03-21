@@ -11,7 +11,11 @@
 #include "ZKTextView.h"
 #include "ime/IMEContext.h"
 
+class ZKEditTextPrivate;
+
 class ZKEditText : public ZKTextView {
+	ZK_DECLARE_PRIVATE(ZKEditText)
+
 public:
 	ZKEditText(HWND hParentWnd);
 	virtual ~ZKEditText();
@@ -20,6 +24,8 @@ public:
 	bool isPassword() const { return mIMETextInfo.isPassword; }
 
 protected:
+	ZKEditText(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_EDITTEXT; }
 
@@ -47,6 +53,7 @@ private:
 	IMEContext::SIMETextInfo mIMETextInfo;
 
 	string mHintText;
+	int mHintTextColor;
 };
 
 #endif /* _CONTROL_ZKEDITTEXT_H_ */

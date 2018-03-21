@@ -11,7 +11,11 @@
 #include <vector>
 #include "ZKBase.h"
 
+class ZKDiagramPrivate;
+
 class ZKDiagram : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKDiagram)
+
 public:
 	typedef enum {
 		E_DIAGRAM_STYLE_LINE,		// 折线
@@ -28,9 +32,13 @@ public:
 	void setYScale(int index, double yScale);
 	void setData(int index, const MPPOINT *pPoints, int count);
 
-	void addDiagramInfo(int width, ARGB color, int style, double xScale = 1.0, double yScale = 1.0);
+	void addData(int index, float data);
+	void addDiagramInfo(int width, ARGB color, EDiagramStyle style,
+			double xScale, double yScale, float step, UINT eraseSpace, bool isAntialiasOn);
 
 protected:
+	ZKDiagram(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_DIAGRAM; }
 
@@ -48,21 +56,26 @@ private:
 	} SAxisRange;
 
 	typedef struct {
+		HGRAPHICS graphics;
 		HPATH path;
 		HPEN pen;
 		int penWidth;
 		ARGB penColor;
-		int style;
+		EDiagramStyle style;
 		double xScale;
 		double yScale;
+		MPPOINT bufPoints[8];
+		int bufIndex;
+		float step;
+		UINT eraseSpace;
+		MPMatrix matrix;
 	} SDiagramInfo;
 
-	void setTransform(SDiagramInfo &diagramInfo);
+	void updateMatrix(SDiagramInfo &info);
+	void transform(const MPMatrix &matrix, float &x, float &y) const;
 
 private:
 	vector<SDiagramInfo *> mDiagramInfoList;
-
-	HGRAPHICS mBackgroundGraphics;
 
 	LayoutPosition mRegionPosition;		// 曲线图绘制区域
 
@@ -71,8 +84,6 @@ private:
 
 	double mXBaseScale;
 	double mYBaseScale;
-
-	bool mIsAntialiasOn;		// 是否打开抗锯齿
 };
 
 #endif /* _CONTROL_ZKDIAGRAM_H_ */

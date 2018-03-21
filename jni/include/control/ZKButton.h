@@ -10,12 +10,18 @@
 
 #include "ZKTextView.h"
 
+class ZKButtonPrivate;
+
 class ZKButton : public ZKTextView {
+	ZK_DECLARE_PRIVATE(ZKButton)
+
 public:
 	ZKButton(HWND hParentWnd);
 	virtual ~ZKButton();
 
 protected:
+	ZKButton(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_BUTTON; }
 
@@ -30,6 +36,7 @@ private:
 
 protected:
 	PBITMAP mButtonStatusPicTab[S_CONTROL_STATUS_TAB_LEN];
+	LayoutPosition mIconPosition;
 };
 
 #endif /* _CONTROL_ZKBUTTON_H_ */

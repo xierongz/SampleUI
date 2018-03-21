@@ -29,13 +29,14 @@
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
 
-
+bool bAdd = 0;
+int fix = 1;
 /**
  * 注册定时器
  * 在此数组中添加即可
  */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
-	{0,  500}, //定时器id=0, 时间间隔6秒
+	{0,  20}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
 
@@ -51,14 +52,48 @@ static void onUI_quit() {
 static void onProtocolDataUpdate(const SProtocolData &data) {
     // 串口数据回调接口
 }
-static int currentAng = 0;
+static int angleTab[]={
+  0,  0,  0,  0,  1,  3,  6,  8, 12, 16,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80,
+ 26, 29, 32, 36, 39, 42, 52, 68, 78, 80
+};
+int angindex = 0;
+int sta  =0;
+int value = 0;
 static bool onUI_Timer(int id){
     //Tips:添加定时器响应的代码到这里,但是需要在本文件的 REGISTER_ACTIVITY_TIMER_TAB 数组中 注册
     //id 是定时器设置时候的标签,这里不要写耗时的操作，否则影响UI刷新,ruturn:[true] 继续运行定时器;[false] 停止运行当前定时器
+
 	if(id == 0){
-		currentAng += 38;
-		if(currentAng > 240) currentAng = 0;
-		mPointer1Ptr->setTargetAngle(currentAng);
+		if (sta == 0) {
+				value = value > 0 ? value - 2 : value;
+				if (value <= 21) sta = 1;
+		} else if(sta == 1){
+				value = (value >= 0 && value < 45) ? value + 3 : value;
+				if (value >= 45) sta = 2;
+		} else if(sta == 2){
+				value = (value >=45 && value < 75)? value + 2 : value;
+				if (value >= 75) sta = 3;
+		} else if(sta == 3){
+				value = value > 55 ? value - 1 : value;
+				if (value <= 55) sta = 4;
+		} else if(sta == 4){
+				value = value < 115 ? value + 1 : value;
+				if (value >= 115) sta = 0;
+		}
+		mPointer1Ptr->setTargetAngle(value);
 	}
 	return true;
 }

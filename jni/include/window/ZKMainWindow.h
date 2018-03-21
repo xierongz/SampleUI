@@ -11,7 +11,11 @@
 #include "ZKWindow.h"
 #include "system/Mutex.h"
 
+class ZKMainWindowPrivate;
+
 class ZKMainWindow : public ZKWindow {
+	ZK_DECLARE_PRIVATE(ZKMainWindow)
+
 public:
 	ZKMainWindow(HWND hParentWnd);
 	virtual ~ZKMainWindow();
@@ -30,6 +34,8 @@ public:
 	void resetTimer(int id, int time);
 
 protected:
+	ZKMainWindow(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual BOOL createWindow();
 	virtual int procCtrlFun(HWND hWnd, int message, WPARAM wParam, LPARAM lParam);

@@ -11,7 +11,11 @@
 #include "ZKButton.h"
 #include "utils/VelocityTracker.h"
 
+class ZKListViewPrivate;
+
 class ZKListView : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKListView)
+
 public:
 	ZKListView(HWND hParentWnd);
 	virtual ~ZKListView();
@@ -101,6 +105,8 @@ public:
 	int getListItemCount() const;
 
 protected:
+	ZKListView(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_LISTVIEW; }
 

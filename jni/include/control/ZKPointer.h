@@ -10,7 +10,11 @@
 
 #include "ZKBase.h"
 
+class ZKPointerPrivate;
+
 class ZKPointer : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKPointer)
+
 public:
 	ZKPointer(HWND hParentWnd);
 	virtual ~ZKPointer();
@@ -18,6 +22,8 @@ public:
 	void setTargetAngle(float angle);
 
 protected:
+	ZKPointer(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_POINTER; }
 
@@ -29,6 +35,9 @@ protected:
 
 private:
 	void _section_(zk) parsePointerAttributeFromJson(const Json::Value &json);
+
+	void getTransformRect(RECT &rt) const;
+	void transform(const MPMatrix &matrix, float &x, float &y) const;
 
 private:
 	PBITMAP mPointerPicPtr;

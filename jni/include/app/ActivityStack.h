@@ -9,6 +9,7 @@
 #define _APP_ACTIVITY_STACK_H_
 
 #include "Activity.h"
+#include "animation/ZKAnimation.h"
 
 class ActivityStack {
 public:
@@ -30,6 +31,8 @@ public:
 	bool goBack();
 	bool goHome();
 
+	bool removeActivity(const char *appName);
+
 	int depth() const { return mActivityCollection.size(); }
 
 	void switchTo(const char *appName, Intent *intentPtr = NULL);
@@ -49,11 +52,32 @@ private:
 
 	bool popToHome(Intent *intentPtr = NULL);
 
-	void doSwitchEffect(Activity *prev, Activity *next, bool switchTo = true);
-	Activity* searchActivityByName(std::string appName) const;
+	Activity* searchActivityByName(const char *appName) const;
+
+	void doSwitchEffect(const Activity *prev, const Activity *next, bool switchTo = true);
+
+	void doZoomAnimation(const Activity *prev, const Activity *next, bool switchTo = true);
+
+private:
+	class ZoomAnimationListener : public ZKAnimation::IAnimationListener {
+	public:
+		ZoomAnimationListener();
+		virtual void onAnimationUpdate(ZKAnimation *pAnimation, const void *value);
+
+		void reset();
+
+	public:
+		LayoutPosition mPrevPos;
+		LayoutPosition mDstPos;
+		HDC mSrcDC;
+		HDC mDstDC;
+		HWND mWnd;
+	};
 
 private:
 	ActivityCollection mActivityCollection;
+
+	ZoomAnimationListener mZoomAnimationListener;
 };
 
 #define ACTIVITYSTACK			ActivityStack::getInstance()

@@ -10,42 +10,30 @@
 
 #include <string>
 
-using namespace std;
-
 class ConfigManager {
 public:
 	static ConfigManager* getInstance();
 
-	string getResFilePath(const string &resFileName);
-	int getLongClickTimeOut() const { return mLongClickTimeOut; }
+	const std::string& getResFilePath(const std::string &resFileName) const;
+	int getLongClickTimeOut() const;
 
-	int getMinBrightness() const { return mMinBrightness; }
-	int getMaxBrightness() const { return mMaxBrightness; }
+	int getMinBrightness() const;
+	int getMaxBrightness() const;
 
-	const string& getStartupLibPath() const { return mStartupLibPath; }
+	const std::string& getStartupLibPath() const;
 
-	int getScreensaverTimeOut() const { return mScreensaverTimeOut; }
+	int getScreensaverTimeOut() const;
 
-	const string& getUartName() const { return mUartName; }
-	unsigned int getUartBaudRate() const { return mUartBaudRate; }
+	const std::string& getUartName() const;
+	unsigned int getUartBaudRate() const;
+
+	const std::string& getDictPinyinPath() const;
+
+	bool isDebugVersion() const;
 
 private:
 	ConfigManager();
 	void initEasyUICfg();
-
-private:
-	string mResPath;
-	int mLongClickTimeOut;
-
-	int mMinBrightness;
-	int mMaxBrightness;
-
-	string mStartupLibPath;
-
-	int mScreensaverTimeOut;
-
-	string mUartName;
-	unsigned int mUartBaudRate;
 };
 
 #define CONFIGMANAGER			ConfigManager::getInstance()

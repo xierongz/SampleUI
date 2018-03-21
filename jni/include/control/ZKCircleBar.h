@@ -10,7 +10,11 @@
 
 #include "ZKBase.h"
 
+class ZKCircleBarPrivate;
+
 class ZKCircleBar : public ZKBase {
+	ZK_DECLARE_PRIVATE(ZKCircleBar)
+
 public:
 	ZKCircleBar(HWND hParentWnd);
 	virtual ~ZKCircleBar();
@@ -22,6 +26,8 @@ public:
 	int getProgress() const { return mProgress; }
 
 protected:
+	ZKCircleBar(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_CIRCLEBAR; }
 

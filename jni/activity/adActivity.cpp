@@ -4,6 +4,13 @@
 #include "adActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKQRCode* mQrcode1Ptr;
+static ZKTextView* mTextview6Ptr;
+static ZKTextView* mTextview5Ptr;
+static ZKTextView* mTextview4Ptr;
+static ZKTextView* mTextview3Ptr;
+static ZKTextView* mTextview2Ptr;
+static ZKWindow* mwindowReadmePtr;
 static ZKButton* msys_backPtr;
 static ZKButton* mButtonConnectSevPtr;
 static ZKButton* mButton1Ptr;
@@ -127,6 +134,13 @@ const char* adActivity::getAppName() const{
 //TAG:onCreate
 void adActivity::onCreate() {
 	Activity::onCreate();
+    mQrcode1Ptr = (ZKQRCode*)findControlByID(ID_AD_Qrcode1);
+    mTextview6Ptr = (ZKTextView*)findControlByID(ID_AD_Textview6);
+    mTextview5Ptr = (ZKTextView*)findControlByID(ID_AD_Textview5);
+    mTextview4Ptr = (ZKTextView*)findControlByID(ID_AD_Textview4);
+    mTextview3Ptr = (ZKTextView*)findControlByID(ID_AD_Textview3);
+    mTextview2Ptr = (ZKTextView*)findControlByID(ID_AD_Textview2);
+    mwindowReadmePtr = (ZKWindow*)findControlByID(ID_AD_windowReadme);
     msys_backPtr = (ZKButton*)findControlByID(ID_AD_sys_back);
     mButtonConnectSevPtr = (ZKButton*)findControlByID(ID_AD_ButtonConnectSev);
     mButton1Ptr = (ZKButton*)findControlByID(ID_AD_Button1);

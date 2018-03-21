@@ -61,6 +61,19 @@ public:
 		BYTE imageHead[16];	// image头数据 swap MD5
 	} SPartInfo;
 
+	/**
+	 * 扩展信息
+	 */
+	typedef struct {
+		BYTE size[4];		// 额外信息长度
+		BYTE perm;			// 权限
+		BYTE type;			// 机型
+		BYTE flag;			// 标记
+		BYTE attr;			// 加密信息相关
+		BYTE reserve[512];	// append
+		BYTE crc32[4];		// 校验
+	} SExtendInfo;
+
 	typedef struct {
 		ESystemUpgradeType upgradeType;
 		std::string upgradeFilePath;
@@ -166,7 +179,12 @@ private:
 	} SMtdInfo;
 	std::vector<SMtdInfo> mMtdInfoList;
 
+	SExtendInfo mExtendInfo;
+
 	STSUpgradeInfo mTSUpgradeInfo;
+
+	std::string mVersionDateStr;
+	const char *mErrorCode;
 };
 
 #define UPGRADEMONITOR		UpgradeMonitor::getInstance()

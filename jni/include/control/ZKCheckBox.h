@@ -10,7 +10,11 @@
 
 #include "ZKButton.h"
 
+class ZKCheckBoxPrivate;
+
 class ZKCheckBox : public ZKButton {
+	ZK_DECLARE_PRIVATE(ZKCheckBox)
+
 public:
 	ZKCheckBox(HWND hParentWnd);
 	virtual ~ZKCheckBox();
@@ -30,6 +34,8 @@ public:
 	}
 
 protected:
+	ZKCheckBox(HWND hParentWnd, ZKBasePrivate *pBP);
+
 	virtual void onBeforeCreateWindow(const Json::Value &json);
 	virtual const char* getClassName() const { return ZK_CHECKBOX; }
 

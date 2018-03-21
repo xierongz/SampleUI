@@ -28,7 +28,7 @@
 *
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
-
+#include "utils/BrightnessHelper.h"
 
 /**
  * 注册定时器
@@ -69,6 +69,7 @@ static void onProgressChanged_SeekBar1(ZKSeekBar *pSeekBar, int progress) {
 	mSeekBar2Ptr->setProgress(progress);
 	mSeekBar2Ptr->getProgress();
 	mTextValuePtr->setText(progress);
+	BRIGHTNESSHELPER->setBrightness(progress);
 }
 
 static void onProgressChanged_SeekBar2(ZKSeekBar *pSeekBar, int progress) {
