@@ -1,5 +1,5 @@
 # 中科世为 FlyThings 控件集演示程序
-## FlyThings 简介
+## FlyThings 国内智能物联网操作系统 简介
 FlyThings是中科世为针对物联网推出的一套带完整GUI，可以快速完成项目开发的一套小型操作系统。
 系统特性：
 1. 基于Linux深度裁剪优化
