@@ -11,8 +11,8 @@ FlyThings是中科世为针对物联网推出的一套带完整GUI，可以快�
 7. 支持自定义控件
 
 ## FlyThings 文档
-开发指南：http://doc.zkswe.com/help/454546
-FlyThings API：http://doc.zkswe.com/FlyThingsApi/422166
+开发指南：http://doc.zkswe.com
+FlyThings API：http://api.zkswe.com
 
 ## FlyThings套件购买路径
 淘宝链接：https://item.taobao.com/item.htm?spm=a230r.1.14.1.541acf5dESeuSI&id=561936929353&ns=1&abbucket=9#detail
