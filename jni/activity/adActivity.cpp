@@ -4,6 +4,9 @@
 #include "adActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKSeekBar* mDownloadSeekbarPtr;
+static ZKTextView* mTextview7Ptr;
+static ZKWindow* mDownloadWindowPtr;
 static ZKQRCode* mQrcode1Ptr;
 static ZKTextView* mTextview6Ptr;
 static ZKTextView* mTextview5Ptr;
@@ -65,6 +68,7 @@ typedef struct {
 }S_ZKSeekBarCallback;
 /*TAG:SeekBarCallbackTab*/
 static S_ZKSeekBarCallback SZKSeekBarCallbackTab[] = {
+    ID_AD_DownloadSeekbar, onProgressChanged_DownloadSeekbar,
 };
 
 
@@ -134,6 +138,9 @@ const char* adActivity::getAppName() const{
 //TAG:onCreate
 void adActivity::onCreate() {
 	Activity::onCreate();
+    mDownloadSeekbarPtr = (ZKSeekBar*)findControlByID(ID_AD_DownloadSeekbar);if(mDownloadSeekbarPtr!= NULL){mDownloadSeekbarPtr->setSeekBarChangeListener(this);}
+    mTextview7Ptr = (ZKTextView*)findControlByID(ID_AD_Textview7);
+    mDownloadWindowPtr = (ZKWindow*)findControlByID(ID_AD_DownloadWindow);
     mQrcode1Ptr = (ZKQRCode*)findControlByID(ID_AD_Qrcode1);
     mTextview6Ptr = (ZKTextView*)findControlByID(ID_AD_Textview6);
     mTextview5Ptr = (ZKTextView*)findControlByID(ID_AD_Textview5);

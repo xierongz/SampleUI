@@ -34,6 +34,7 @@
 #include "SocketClient.h"
 
 #include "os/SystemProperties.h"
+#include "os/UpgradeMonitor.h"
 
 SocketClient* mSocket=NULL;
 bool bHavePic = false;
@@ -45,21 +46,73 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	{0,  1000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
+
+// 目前没有检测升级完成的注册接口，先用以下挫的方法处理
+class CheckThread : public Thread {
+protected:
+	virtual bool readyToRun() {
+		mIsUpgrading = false;
+		return true;
+	}
+
+	virtual bool threadLoop() {
+		if (!mIsUpgrading) {
+			mIsUpgrading = UPGRADEMONITOR->isUpgrading();
+			if (mIsUpgrading) {
+				LOGD("Upgrading ...\n");
+			}
+		} else {
+			if (!UPGRADEMONITOR->isUpgrading()) {
+				remove(UPGRADE_FILE_PATH);
+				LOGD("Upgrade end ...\n");
+				return false;
+			}
+		}
+		sleep(10);
+		return true;
+	}
+
+private:
+	bool mIsUpgrading;
+};
+
+static CheckThread sCheckThread;
+
 class iWiFiSocketListener : public SocketClient::ISocketListener {
 public:
 	virtual void notify(int what, int status, const char *msg){
-		if(what == 0){
-			if(status == SocketClient::E_SOCKET_STATUS_RECV_OK){
+		switch (status) {
+		case SocketClient::E_SOCKET_STATUS_START_RECV:
+			if (strcmp(RECV_TYPE_IMG, msg) == 0) {
+				mDownloadSeekbarPtr->setMax(what);
+				mDownloadSeekbarPtr->setProgress(0);
+				mDownloadWindowPtr->showWnd();
+			}
+			break;
+		case SocketClient::E_SOCKET_STATUS_RECVING:
+			if (strcmp(RECV_TYPE_IMG, msg) == 0) {
+				mDownloadSeekbarPtr->setProgress(what);
+			}
+			break;
+		case SocketClient::E_SOCKET_STATUS_RECV_OK:
+			if (strcmp(BUFFER_FILE_NAME, msg) == 0) {	// 显示图片
 				mButton1Ptr->setVisible(false);
 				mButtonConnectSevPtr->setVisible(false);
 				mTextview1Ptr->setText("");
 				bHavePic = true;
 				mTextview1Ptr->setBackgroundPic(msg);
-
+			} else {
+				if (UPGRADEMONITOR->checkUpgrade()) {
+					sCheckThread.run();
+				}
 			}
+			break;
+		case SocketClient::E_SOCKET_STATUS_RECV_ERROR:
+			break;
 		}
 	}
 };
+
 static iWiFiSocketListener mWifiSocket;
 static void onUI_init(){
     //Tips :添加 UI初始化的显示代码到这里,如:mText1->setText("123");
@@ -68,6 +121,8 @@ static void onUI_init(){
 		mTextview1Ptr->setText("WiFi 未连接...");
 	}
 	mSocket->setSocketListener(&mWifiSocket);
+
+	sCheckThread.requestExit();
 }
 
 static void onUI_quit() {
@@ -121,5 +176,9 @@ static bool onButtonClick_ButtonConnectSev(ZKButton *pButton) {
 static bool onButtonClick_sys_back(ZKButton *pButton) {
     //LOGD(" ButtonClick sys_back !!!\n");
     return true;
+}
+
+static void onProgressChanged_DownloadSeekbar(ZKSeekBar *pSeekBar, int progress) {
+    //LOGD(" ProgressChanged DownloadSeekbar %d !!!\n", progress);
 }
 

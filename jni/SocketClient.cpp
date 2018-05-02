@@ -246,30 +246,45 @@ void SocketClient::threadLoop() {
 			(const char*)&timeout, sizeof(timeout));
 
 	while (mClientSocket > 0) {
-//		char fileSizeStr[15] = { 0 };
-//		int length = read(mClientSocket, fileSizeStr, 15);
-//		LOGD("read length: %d\n", length);
+		char fileType[10] = { 0 };
+
+		int length = read(mClientSocket, fileType, 3);
+		LOGD("length %d, fileType %s\n", length, fileType);
+		if (length < 0) {
+			if (errno != EAGAIN) {
+				LOGD("read fileType error %s\n", strerror(errno));
+				disconnect();
+				break;
+			}
+			continue;
+		} else if (length == 0) {
+			LOGD("read length is 0......%s\n", strerror(errno));
+			disconnect();
+			break;
+		}
+
 
 		int fileSize = 0;
-		int length = read(mClientSocket, &fileSize, sizeof(int));
-//		LOGD("read length: %d\n", length);
+		length = read(mClientSocket, &fileSize, sizeof(int));
 
 		if (length > 0) {
-//			int fileSize = atoi(fileSizeStr);
 			LOGD("read fileSize: %d\n", fileSize);
 			if (fileSize <= 0) {
 				continue;
 			}
 
 			if (mSocketListener != NULL) {
-				mSocketListener->notify(0, E_SOCKET_STATUS_START_RECV, "");
+				mSocketListener->notify(fileSize / BUFFER_SIZE, E_SOCKET_STATUS_START_RECV, fileType);
 			}
 
 			bool ret = true;
-			FILE *fp = fopen(BUFFER_FILE_NAME, "w");
+			const char *pFile = (strcmp(fileType, RECV_TYPE_IMG) == 0) ? UPGRADE_FILE_PATH : BUFFER_FILE_NAME;
+			FILE *fp = fopen(pFile, "w");
 			if (fp != NULL) {
 				int readLen = 0;
 				char buffer[BUFFER_SIZE] = { 0 };
+
+				int recvLen = 0;
 
 				while (fileSize > 0) {
 					readLen = (fileSize > BUFFER_SIZE) ? BUFFER_SIZE : fileSize;
@@ -284,9 +299,14 @@ void SocketClient::threadLoop() {
 
 					int writeLength = fwrite(buffer, sizeof(char), length, fp);
 					if (writeLength < length) {
-						LOGD("File:\t%s Write Failed\n", BUFFER_FILE_NAME);
+						LOGD("File:\t%s Write Failed\n", pFile);
 						ret = false;
 //						break;
+					} else {
+						recvLen += length;
+						if (mSocketListener != NULL) {
+							mSocketListener->notify(recvLen / BUFFER_SIZE, E_SOCKET_STATUS_RECVING, fileType);
+						}
 					}
 
 					fileSize -= length;
@@ -299,10 +319,10 @@ void SocketClient::threadLoop() {
 				}
 
 				if (mSocketListener != NULL) {
-					mSocketListener->notify(0, ret ? E_SOCKET_STATUS_RECV_OK : E_SOCKET_STATUS_RECV_ERROR, BUFFER_FILE_NAME);
+					mSocketListener->notify(0, ret ? E_SOCKET_STATUS_RECV_OK : E_SOCKET_STATUS_RECV_ERROR, pFile);
 				}
 			} else {
-				LOGE("%s open fail, erro: %s\n", BUFFER_FILE_NAME, strerror(errno));
+				LOGE("%s open fail, erro: %s\n", pFile, strerror(errno));
 			}
 		} else if (length < 0) {
 			if (errno != EAGAIN) {

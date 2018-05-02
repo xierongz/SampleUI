@@ -27,6 +27,9 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_AD_DownloadSeekbar    91001
+#define ID_AD_Textview7    50007
+#define ID_AD_DownloadWindow    110002
 #define ID_AD_Qrcode1    92001
 #define ID_AD_Textview6    50006
 #define ID_AD_Textview5    50005

@@ -11,6 +11,10 @@
 
 #define SERVER_IP_ADDR			"192.168.43.1"
 #define BUFFER_FILE_NAME		"/mnt/extsd/recv.jpg"
+#define UPGRADE_FILE_PATH		"/mnt/extsd/update.img"
+
+#define RECV_TYPE_JPG			"jpg"
+#define RECV_TYPE_IMG			"img"
 
 
 class SocketClient {
@@ -25,10 +29,11 @@ public:
 
 public:
 	typedef enum {
-		E_SOCKET_STATUS_START_RECV		= 0,
-		E_SOCKET_STATUS_RECV_OK			= 1,
-		E_SOCKET_STATUS_RECV_ERROR		= 2,
-		E_SOCKET_STATUS_UPDATE_DATE		= 3
+		E_SOCKET_STATUS_START_RECV = 0,
+		E_SOCKET_STATUS_RECVING,
+		E_SOCKET_STATUS_RECV_OK,
+		E_SOCKET_STATUS_RECV_ERROR,
+		E_SOCKET_STATUS_UPDATE_DATE
 	} ESocketStatus;
 
 	class ISocketListener {
