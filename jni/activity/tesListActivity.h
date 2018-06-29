@@ -23,14 +23,15 @@
 #include "control/ZKSeekBar.h"
 #include "control/ZKEditText.h"
 #include "control/ZKVideoView.h"
-#include "control/ZKVideoView.h"
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
-#define ID_TESLIST_Listview1    80001
-#define ID_TESLIST_ListSub2    70001
-#define ID_TESLIST_ListSub1    70000
-#define ID_TESLIST_List1    80000
+#define ID_TESLIST_Listview1Sub2    70001
+#define ID_TESLIST_Listview2Sub2    70001
+#define ID_TESLIST_Listview2Sub1    70000
+#define ID_TESLIST_Listview2    80001
+#define ID_TESLIST_Listview1Sub1    70000
+#define ID_TESLIST_Listview1    80000
 /*TAG:Macro宏ID END*/
 
 class tesListActivity : public Activity, 

@@ -4,8 +4,8 @@
 #include "tesListActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKListView* mListview2Ptr;
 static ZKListView* mListview1Ptr;
-static ZKListView* mList1Ptr;
 
 /*register activity*/
 REGISTER_ACTIVITY(tesListActivity);
@@ -67,8 +67,8 @@ typedef struct {
 }S_ListViewFunctionsCallback;
 /*TAG:ListViewFunctionsCallback*/
 static S_ListViewFunctionsCallback SListViewFunctionsCallbackTab[] = {
+    ID_TESLIST_Listview2, getListItemCount_Listview2, obtainListItemData_Listview2, onListItemClick_Listview2,
     ID_TESLIST_Listview1, getListItemCount_Listview1, obtainListItemData_Listview1, onListItemClick_Listview1,
-    ID_TESLIST_List1, getListItemCount_List1, obtainListItemData_List1, onListItemClick_List1,
 };
 
 
@@ -124,8 +124,8 @@ const char* tesListActivity::getAppName() const{
 //TAG:onCreate
 void tesListActivity::onCreate() {
 	Activity::onCreate();
+    mListview2Ptr = (ZKListView*)findControlByID(ID_TESLIST_Listview2);if(mListview2Ptr!= NULL){mListview2Ptr->setListAdapter(this);mListview2Ptr->setItemClickListener(this);}
     mListview1Ptr = (ZKListView*)findControlByID(ID_TESLIST_Listview1);if(mListview1Ptr!= NULL){mListview1Ptr->setListAdapter(this);mListview1Ptr->setItemClickListener(this);}
-    mList1Ptr = (ZKListView*)findControlByID(ID_TESLIST_List1);if(mList1Ptr!= NULL){mList1Ptr->setListAdapter(this);mList1Ptr->setItemClickListener(this);}
 	onUI_init();
         // 注册监听全局触摸
     EASYUICONTEXT->registerGlobalTouchListener(this);
@@ -139,7 +139,9 @@ void tesListActivity::onClick(ZKBase *pBase) {
     int buttonTablen = sizeof(sButtonCallbackTab) / sizeof(S_ButtonCallback);
     for (int i = 0; i < buttonTablen; ++i) {
         if (sButtonCallbackTab[i].id == pBase->getID()) {
-            sButtonCallbackTab[i].callback((ZKButton*)pBase);
+            if (sButtonCallbackTab[i].callback((ZKButton*)pBase)) {
+            	return;
+            }
             break;
         }
     }
@@ -283,7 +285,7 @@ void tesListActivity::videoLoopPlayback(ZKVideoView *pVideoView, int msg, int ca
 		} //不用break, 继续尝试播放下一个
 	case ZKVideoView::E_MSGTYPE_VIDEO_PLAY_COMPLETED:
 		LOGD("ZKVideoView::E_MSGTYPE_VIDEO_PLAY_COMPLETED\n");
-        std:vector<std::string> videolist;
+        std::vector<std::string> videolist;
         std::string fileName(getAppName());
         if (fileName.size() < 4) {
              LOGD("getAppName size < 4, ignore!");
@@ -341,18 +343,19 @@ bool tesListActivity::parseVideoFileList(const char *pFileListPath, std::vector<
 		return false;
 	}
 
-	string tmp;
 	ifstream is(pFileListPath, ios_base::in);
 	if (!is.is_open()) {
 		LOGD("cann't open file %s \n", pFileListPath);
 		return false;
 	}
-	while (getline(is, tmp)) {
-		removeCharFromString(tmp, '\"');
-		removeCharFromString(tmp, '\r');
-		removeCharFromString(tmp, '\n');
-		if (tmp.size() > 1) {
-     		mediaFileList.push_back(string(tmp.c_str()));
+	char tmp[1024] = {0};
+	while (is.getline(tmp, sizeof(tmp))) {
+		string str = tmp;
+		removeCharFromString(str, '\"');
+		removeCharFromString(str, '\r');
+		removeCharFromString(str, '\n');
+		if (str.size() > 1) {
+     		mediaFileList.push_back(str.c_str());
 		}
 	}
 	LOGD("(f:%s, l:%d) parse fileList[%s], get [%d]files\n", __FUNCTION__,

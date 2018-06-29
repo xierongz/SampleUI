@@ -82,27 +82,6 @@ static bool ontesListActivityTouchEvent(const MotionEvent &ev) {
     return false;
 }
 
-static int getListItemCount_List1(const ZKListView *pListView) {
-    //LOGD(" getListItemCount_ List1  !!!\n");
-	return sizeof(sDataTestTab)/sizeof(S_TEST_DATA);
-    //return 0;
-}
-
-static void obtainListItemData_List1(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index) {
-	ZKListView::ZKListSubItem* psubText = pListItem->findSubItemByID(ID_TESLIST_ListSub1);
-	ZKListView::ZKListSubItem* psubButton = pListItem->findSubItemByID(ID_TESLIST_ListSub2);
-	psubText->setText(sDataTestTab[index].subText);
-	pListItem->setText(sDataTestTab[index].mainText);
-	psubButton->setSelected(sDataTestTab[index].bOn);
-    //LOGD(" obtainListItemData_ List1  !!!\n");
-}
-
-static void onListItemClick_List1(ZKListView *pListView, int index, int id) {
-    //LOGD(" onListItemClick_ List1  !!!\n");
-	sDataTestTab[index].bOn = !sDataTestTab[index].bOn;
-	mListview1Ptr->refreshListView();
-}
-
 static bool onButtonClick_sys_back(ZKButton *pButton) {
     //LOGD(" ButtonClick sys_back !!!\n");
     return true;
@@ -114,17 +93,36 @@ static int getListItemCount_Listview1(const ZKListView *pListView) {
 }
 
 static void obtainListItemData_Listview1(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index) {
-    //LOGD(" obtainListItemData_ Listview1  !!!\n");
-	ZKListView::ZKListSubItem* psubText = pListItem->findSubItemByID(ID_TESLIST_ListSub1);
-	ZKListView::ZKListSubItem* psubButton = pListItem->findSubItemByID(ID_TESLIST_ListSub2);
+
+	ZKListView::ZKListSubItem* psubText = pListItem->findSubItemByID(ID_TESLIST_Listview1Sub1);
+	ZKListView::ZKListSubItem* psubButton = pListItem->findSubItemByID(ID_TESLIST_Listview1Sub2);
 	psubText->setText(sDataTestTab[index].subText);
 	pListItem->setText(sDataTestTab[index].mainText);
 	psubButton->setSelected(sDataTestTab[index].bOn);
+    //LOGD(" obtainListItemData_ List1  !!!\n");
 }
 
 static void onListItemClick_Listview1(ZKListView *pListView, int index, int id) {
     //LOGD(" onListItemClick_ Listview1  !!!\n");
 	sDataTestTab[index].bOn = !sDataTestTab[index].bOn;
-	mList1Ptr->refreshListView();
+	mListview2Ptr->refreshListView();
+}
+
+static int getListItemCount_Listview2(const ZKListView *pListView) {
+	return sizeof(sDataTestTab)/sizeof(S_TEST_DATA);
+}
+
+static void obtainListItemData_Listview2(ZKListView *pListView,ZKListView::ZKListItem *pListItem, int index) {
+	//LOGD(" obtainListItemData_ Listview1  !!!\n");
+	ZKListView::ZKListSubItem* psubText = pListItem->findSubItemByID(ID_TESLIST_Listview2Sub1);
+	ZKListView::ZKListSubItem* psubButton = pListItem->findSubItemByID(ID_TESLIST_Listview2Sub2);
+	psubText->setText(sDataTestTab[index].subText);
+	pListItem->setText(sDataTestTab[index].mainText);
+	psubButton->setSelected(sDataTestTab[index].bOn);
+}
+
+static void onListItemClick_Listview2(ZKListView *pListView, int index, int id) {
+	sDataTestTab[index].bOn = !sDataTestTab[index].bOn;
+	mListview1Ptr->refreshListView();
 }
 
