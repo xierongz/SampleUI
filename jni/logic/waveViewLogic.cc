@@ -58,9 +58,13 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	{0,  90}, //定时器id=0,80ms刷新一个波形数据
 	{1,  30},
 };
-
+bool bRefresh = true;
 static void onUI_init(){
     //Tips :添加 UI初始化的显示代码到这里,如:mText1->setText("123");
+	//初始化按键
+	//如果不保留上次操作内容则把该行语句的注释去掉
+	//bRefresh = true;
+	mButtonOnOffPtr->setSelected(!bRefresh);
 	// 初始化一下要使用的数据
 	for(int i =0;i < DIAGRAM_SIZE;i++){
 		sPoints[i].x = (100*i)/DIAGRAM_SIZE;
@@ -84,7 +88,7 @@ static void onUI_quit() {
 static void onProtocolDataUpdate(const SProtocolData &data) {
     // 串口数据回调接口
 }
-bool bRefresh = true;
+
 
 bool badd = false;
 
