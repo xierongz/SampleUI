@@ -58,6 +58,7 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	{0,  90}, //定时器id=0,80ms刷新一个波形数据
 	{1,  30},
 };
+//将bRefresh定义放到onUI_init()函数前
 bool bRefresh = true;
 static void onUI_init(){
     //Tips :添加 UI初始化的显示代码到这里,如:mText1->setText("123");
